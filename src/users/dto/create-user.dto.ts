@@ -7,10 +7,6 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  last_name: string;
-
-  @IsString()
-  @IsNotEmpty()
   grade: string;
 
   @IsString()
