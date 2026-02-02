@@ -30,6 +30,9 @@ export class User {
   @Column()
   area: string;
 
+  @Column({ nullable: true })
+  photo_url: string;
+
   @OneToMany(() => Qr, (qr) => qr.user)
   qrs: Qr[];
 

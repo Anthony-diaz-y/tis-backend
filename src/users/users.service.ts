@@ -3,25 +3,32 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { CloudinaryService } from 'src/common/cloudinary/cloudinary.service';
+
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepo: Repository<User>,
+    private readonly cloudinaryService: CloudinaryService,
   ) {}
-  createUser(createUserDto: CreateUserDto) {
+
+  async createUser(createUserDto: CreateUserDto, file?: Express.Multer.File) {
+    if (file) {
+      const result = await this.cloudinaryService.uploadFile(file);
+      createUserDto.photo_url = result.secure_url;
+    }
+
     const newUser = this.userRepo.create(createUserDto);
-    const user = this.userRepo.save(newUser);
-    return user;
+    return await this.userRepo.save(newUser);
   }
+
   async findAllUsers() {
-    const users = await this.userRepo.find();
-    return users;
+    return await this.userRepo.find();
   }
+
   async findOneUser(id: string) {
     const user = await this.userRepo.findOneBy({ id });
-
     if (!user) throw new NotFoundException(`User with ID ${id} not found`);
-    const { id: userId, name, grade, specialty, dni, cip, area } = user;
-    return { id: userId, name, grade, specialty, dni, cip, area };
+    return user;
   }
 }
