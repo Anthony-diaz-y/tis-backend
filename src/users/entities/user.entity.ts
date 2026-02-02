@@ -7,7 +7,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
@@ -17,10 +16,19 @@ export class User {
   name: string;
 
   @Column()
-  last_name: string;
+  grade: string;
 
   @Column()
-  grade: string;
+  specialty: string;
+
+  @Column()
+  dni: string;
+
+  @Column()
+  cip: string;
+
+  @Column()
+  area: string;
 
   @OneToMany(() => Qr, (qr) => qr.user)
   qrs: Qr[];
