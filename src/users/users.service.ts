@@ -21,18 +21,8 @@ export class UsersService {
   async findOneUser(id: string) {
     const user = await this.userRepo.findOneBy({ id });
 
-<<<<<<< Updated upstream
-    if (!user) throw new NotFoundException(`User with ID ${id} not found`)
-
-    const { name, last_name, grade } = user
-
-    return {
-      name, last_name, grade
-    };
-=======
     if (!user) throw new NotFoundException(`User with ID ${id} not found`);
     const { id: userId, name, grade, specialty, dni, cip, area } = user;
     return { id: userId, name, grade, specialty, dni, cip, area };
->>>>>>> Stashed changes
   }
 }
