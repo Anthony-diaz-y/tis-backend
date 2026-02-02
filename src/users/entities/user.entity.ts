@@ -16,9 +16,6 @@ export class User {
   name: string;
 
   @Column()
-  last_name: string;
-
-  @Column()
   grade: string;
 
   @Column()
